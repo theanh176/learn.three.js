@@ -9,6 +9,7 @@ import negz from "../images/negz.jpg";
 import posx from "../images/posx.jpg";
 import posy from "../images/posy.jpg";
 import posz from "../images/posz.jpg";
+import univ from "../images/univ_black.jpg";
 
 const renderer = new THREE.WebGLRenderer();
 
@@ -124,6 +125,7 @@ const textureLoader = new THREE.TextureLoader();
 // renderer.setClearColor(0xffffff, 1);
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 scene.background = cubeTextureLoader.load([posx, negx, posy, negy, posz, negz]);
+// scene.background = cubeTextureLoader.load([univ, univ, univ, univ, univ, univ]);
 
 const box2Geometry = new THREE.BoxGeometry(15, 30, 15);
 const box2Material = new THREE.MeshStandardMaterial({
