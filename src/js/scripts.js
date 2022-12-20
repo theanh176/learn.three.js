@@ -11,6 +11,10 @@ import posx from "../images3/posx.jpg";
 import posy from "../images3/posy.jpg";
 import posz from "../images3/posz.jpg";
 import bearbrick from "../images3/bearbrick.jpg";
+import univ from "../images3/200w.webp";
+
+// import video ytb link
+
 
 //renderer
 const renderer = new THREE.WebGLRenderer();
@@ -42,6 +46,7 @@ camera.position.set(-5, 0, 0);
 orbit.enableZoom = false;
 orbit.rotateSpeed = 0.4;
 
+
 // view camera mouse move and click mouse move camera follow mouse move
 
 orbit.update();
@@ -69,6 +74,7 @@ const sphereGeometry = new THREE.SphereGeometry(10, 50, 50);
 const sphereMaterial = new THREE.MeshStandardMaterial({
 	color: 0xff0000,
 	wireframe: false,
+	map: new THREE.TextureLoader().load(univ),
 });
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphere.position.set(0, 0, 0);
@@ -82,8 +88,11 @@ sphere.castShadow = true;
 // Hình tròn 2
 const sphereMaterial2 = new THREE.MeshStandardMaterial({
 	// màu vàng
-	color: 0xffff00,
+	// color: 0xffff00,
 	wireframe: false,
+	// Chuyển động hình tròn 
+	map: new THREE.TextureLoader().load(univ),
+
 	// Gắn video
 	// map: videoTexture,
 });
@@ -97,6 +106,7 @@ const sphereMaterial3 = new THREE.MeshStandardMaterial({
 	// Màu xanh
 	color: 0x0000ff,
 	wireframe: false,
+	map: new THREE.TextureLoader().load(univ),
 });
 const sphere3 = new THREE.Mesh(sphereGeometry, sphereMaterial3);
 sphere3.position.set(0, 0, 35);
@@ -311,6 +321,17 @@ function animate(time) {
 
 	// box2.rotation.x = time / 1000;
 	box2.rotation.y = time / 3500;
+
+	// hình tròn vàng quay 
+	sphere2.rotation.x = time / 1000;
+	sphere2.rotation.y = time / 1000;
+
+	sphere3.rotation.x = time / 1000;
+	sphere3.rotation.y = time / 1000;
+
+	sphere4.rotation.x = time / 1000;
+	sphere4.rotation.y = time / 1000;
+
 
 	plane2.geometry.attributes.position.array[0] = 10 * Math.random();
 	plane2.geometry.attributes.position.array[1] = 10 * Math.random();
