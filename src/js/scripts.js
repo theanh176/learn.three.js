@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "dat.gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 
 import negx from "../images2/negx.jpg";
 import negy from "../images2/negy.jpg";
@@ -11,18 +12,20 @@ import posy from "../images2/posy.jpg";
 import posz from "../images2/posz.jpg";
 import univ from "../images/univ_black.jpg";
 
+//renderer
 const renderer = new THREE.WebGLRenderer();
 
 renderer.shadowMap.enabled = true;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
-
 document.body.appendChild(renderer.domElement);
 
+//scene
 const scene = new THREE.Scene();
 
+//camera
 const camera = new THREE.PerspectiveCamera(
-	75,
+	70,
 	window.innerWidth / window.innerHeight,
 	0.1,
 	1000
@@ -31,9 +34,16 @@ const camera = new THREE.PerspectiveCamera(
 const orbit = new OrbitControls(camera, renderer.domElement);
 
 const axesHelper = new THREE.AxesHelper(30);
-// scene.add(axesHelper);
+scene.add(axesHelper);
 
 camera.position.set(-5, 0, 0);
+
+// camera speed and slow motion
+orbit.enableZoom = false;
+orbit.rotateSpeed = 0.4;
+
+// view camera mouse move and click mouse move camera follow mouse move 
+
 
 orbit.update();
 
@@ -67,13 +77,23 @@ sphere.position.set(0, 0, 0);
 sphere.castShadow = true;
 
 // Hình tròn 2
-const sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial);
+const sphereMaterial2 = new THREE.MeshStandardMaterial({
+	// màu vàng
+	color: 0xffff00,
+	wireframe: false,
+});
+const sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial2);
 sphere2.position.set(-35, 0, 0);
 scene.add(sphere2);
 sphere2.castShadow = true;
 
 // Hình tròn 3
-const sphere3 = new THREE.Mesh(sphereGeometry, sphereMaterial);
+const sphereMaterial3 = new THREE.MeshStandardMaterial({
+	// Màu xanh
+	color: 0x0000ff,
+	wireframe: false,
+});
+const sphere3 = new THREE.Mesh(sphereGeometry, sphereMaterial3);
 sphere3.position.set(0, 0, 35);
 scene.add(sphere3);
 sphere3.castShadow = true;
@@ -126,6 +146,39 @@ const textureLoader = new THREE.TextureLoader();
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 scene.background = cubeTextureLoader.load([posx, negx, posy, negy, posz, negz]);
 // scene.background = cubeTextureLoader.load([univ, univ, univ, univ, univ, univ]);
+
+// khi thả chuột thì màn hình sẽ trở về ban đầu
+renderer.domElement.addEventListener("click", () => {
+	// log vị trí camera khi click chuột
+	console.log(camera.position);
+
+	//Nhìn xanh
+	if (
+		-3.5 < camera.position.x < 3.5 &&
+		camera.position.z < -3.5
+		// ||
+		// camera.position.z < -3.5 ||
+		// camera.position.z > 3.5
+	) {
+		camera.position.set(0, 0, -5);
+	}
+
+	//Nhìn vàng
+	if (-3.5 < camera.position.z < 3.5 && camera.position.x > 3.5) {
+		camera.position.set(5, 0, 0);
+	}
+
+	//Nhìn đỏ
+	if (-3.5 < camera.position.x < 3.5 && camera.position.z > 3.5) {
+		camera.position.set(0, 0, 5);
+	}
+
+	//Nhìn hộp
+	if (-3.5 < camera.position.z < 3.5 && camera.position.x < -3.5) {
+		camera.position.set(-5, 0, 0);
+	}
+	camera.lookAt(0, 0, 0);
+});
 
 const box2Geometry = new THREE.BoxGeometry(15, 30, 15);
 const box2Material = new THREE.MeshStandardMaterial({
@@ -210,10 +263,10 @@ let step = 0;
 
 const mousePosition = new THREE.Vector2();
 
-window.addEventListener("mousemove", (e) => {
-	mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
-	mousePosition.y = -(e.clientY / window.innerHeight) * 2 + 1;
-});
+// window.addEventListener("mousemove", (e) => {
+// 	mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
+// 	mousePosition.y = -(e.clientY / window.innerHeight) * 2 + 1;
+// });
 
 const raycaster = new THREE.Raycaster();
 
@@ -237,13 +290,13 @@ function animate(time) {
 	// console.log(intersects);
 
 	// for (let i = 0; i < intersects.length; i++) {
-	// 	if (intersects[i].object.id === sphereId) {
-	// 		intersects[i].object.rotation.x = time / 1000;
-	// 		intersects[i].object.rotation.y = time / 1000;
-	// 	}
-
 	// 	if (intersects[i].object.name === "theBox") {
-	// 		intersects[i].object.material.color.set(0x0000ff);
+	// 		// Click vào box thì hiện text
+	// 		document.getElementById("text").style.display = "block";
+	// 		console.log(1);
+	// 	} else {
+	// 		document.getElementById("text").style.display = "none";
+	// 		console.log(2);
 	// 	}
 	// }
 
