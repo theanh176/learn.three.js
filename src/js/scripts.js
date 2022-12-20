@@ -4,13 +4,13 @@ import * as dat from "dat.gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 
-import negx from "../images2/negx.jpg";
-import negy from "../images2/negy.jpg";
-import negz from "../images2/negz.jpg";
-import posx from "../images2/posx.jpg";
-import posy from "../images2/posy.jpg";
-import posz from "../images2/posz.jpg";
-import univ from "../images/univ_black.jpg";
+import negx from "../images3/negx.jpg";
+import negy from "../images3/negy.jpg";
+import negz from "../images3/negz.jpg";
+import posx from "../images3/posx.jpg";
+import posy from "../images3/posy.jpg";
+import posz from "../images3/posz.jpg";
+import bearbrick from "../images3/bearbrick.jpg";
 
 //renderer
 const renderer = new THREE.WebGLRenderer();
@@ -34,7 +34,7 @@ const camera = new THREE.PerspectiveCamera(
 const orbit = new OrbitControls(camera, renderer.domElement);
 
 const axesHelper = new THREE.AxesHelper(30);
-scene.add(axesHelper);
+// scene.add(axesHelper);
 
 camera.position.set(-5, 0, 0);
 
@@ -42,8 +42,7 @@ camera.position.set(-5, 0, 0);
 orbit.enableZoom = false;
 orbit.rotateSpeed = 0.4;
 
-// view camera mouse move and click mouse move camera follow mouse move 
-
+// view camera mouse move and click mouse move camera follow mouse move
 
 orbit.update();
 
@@ -76,11 +75,17 @@ sphere.position.set(0, 0, 0);
 // scene.add(sphere);
 sphere.castShadow = true;
 
+// Gắn video vào hình tròn vàng (sphere2)
+// const video = document.getElementById("video");
+// const videoTexture = new THREE.VideoTexture(video);
+
 // Hình tròn 2
 const sphereMaterial2 = new THREE.MeshStandardMaterial({
 	// màu vàng
 	color: 0xffff00,
 	wireframe: false,
+	// Gắn video
+	// map: videoTexture,
 });
 const sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial2);
 sphere2.position.set(-35, 0, 0);
@@ -152,6 +157,10 @@ renderer.domElement.addEventListener("click", () => {
 	// log vị trí camera khi click chuột
 	console.log(camera.position);
 
+	// z += 0.01;
+	// x += 0.01;
+	// y += 0.01;
+
 	//Nhìn xanh
 	if (
 		-3.5 < camera.position.x < 3.5 &&
@@ -186,18 +195,18 @@ const box2Material = new THREE.MeshStandardMaterial({
 	map: textureLoader.load(negx),
 });
 const box2MultiMaterial = [
-	new THREE.MeshStandardMaterial({ map: textureLoader.load(negx) }),
-	new THREE.MeshStandardMaterial({ map: textureLoader.load(posx) }),
-	new THREE.MeshStandardMaterial({ map: textureLoader.load(negy) }),
-	new THREE.MeshStandardMaterial({ map: textureLoader.load(posy) }),
-	new THREE.MeshStandardMaterial({ map: textureLoader.load(negz) }),
-	new THREE.MeshStandardMaterial({ map: textureLoader.load(posz) }),
+	new THREE.MeshStandardMaterial({ map: textureLoader.load(bearbrick) }),
+	new THREE.MeshStandardMaterial({ map: textureLoader.load(bearbrick) }),
+	new THREE.MeshStandardMaterial({ map: textureLoader.load(bearbrick) }),
+	new THREE.MeshStandardMaterial({ map: textureLoader.load(bearbrick) }),
+	new THREE.MeshStandardMaterial({ map: textureLoader.load(bearbrick) }),
+	new THREE.MeshStandardMaterial({ map: textureLoader.load(bearbrick) }),
 ];
 
 const box2 = new THREE.Mesh(box2Geometry, box2MultiMaterial);
 box2.position.set(35, 0, 0);
 scene.add(box2);
-box2.material.map = textureLoader.load(negx);
+box2.material.map = textureLoader.load(bearbrick);
 
 const plane2Geometry = new THREE.PlaneGeometry(10, 10, 10, 10);
 const plane2Material = new THREE.MeshStandardMaterial({
