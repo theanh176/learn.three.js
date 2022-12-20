@@ -3,12 +3,12 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "dat.gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-import negx from "../images3/negx.jpg";
-import negy from "../images3/negy.jpg";
-import negz from "../images3/negz.jpg";
-import posx from "../images3/posx.jpg";
-import posy from "../images3/posy.jpg";
-import posz from "../images3/posz.jpg";
+import negx from "../images/negx.jpg";
+import negy from "../images/negy.jpg";
+import negz from "../images/negz.jpg";
+import posx from "../images/posx.jpg";
+import posy from "../images/posy.jpg";
+import posz from "../images/posz.jpg";
 
 const renderer = new THREE.WebGLRenderer();
 
